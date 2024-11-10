@@ -262,8 +262,17 @@ class Buyer {
         System.out.print("Enter your bid amount: ");
         double bid = scanner.nextDouble();
         product.placeBid(bid, this);
-    }
-
+        System.out.println("do anyone wnat to place next bid yes(1)/no(0)");
+        int chh = scanner.nextInt();
+        if(chh==0){
+             try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("bid interrupted");
+            }
+            System.out.println("THIS item is sold to "+  username +" \nPROCEED WITH PAYMENT!!!");
+        }
+    } 
     public void makePayment(Product product) {
         if (this == product.getHighestBidder()) {
             System.out.println("Processing payment of $" + product.getHighestBid());
@@ -282,6 +291,7 @@ class Buyer {
         product.trackPackage();
     }
 }
+
 
 class Graph {
     private HashMap<Product, List<Product>> adjList = new HashMap<>();
@@ -370,6 +380,7 @@ class Main {
                         System.out.println("New Buyer account created.");
                     }
 
+                    // Displaying Products for Bidding
                     System.out.print("Choose Product Name to Bid on: ");
                     String bidProductName = scanner.nextLine();
                     Product bidProduct = bst.search(bidProductName);
@@ -381,6 +392,7 @@ class Main {
 
                         switch (buyerChoice) {
                             case 1:
+                                // Call the placeBid method (this is where the 3-second window is managed)
                                 currentBuyer.placeBid(bidProduct);
                                 break;
                             case 2:
